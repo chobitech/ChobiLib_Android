@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    //alias(libs.plugins.kotlin.android)
     id("maven-publish")
 }
 
@@ -17,6 +18,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+
 
     publishing {
         singleVariant("release") {
@@ -36,7 +38,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.chobitech"
                 artifactId = "chobilib"
-                version = "0.1.1"
+                version = "0.1.2"
             }
         }
     }
