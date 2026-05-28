@@ -18,12 +18,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
+    /*
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15" // バージョンはプロジェクトに合わせてください
     }
+
+     */
 
 
     publishing {
