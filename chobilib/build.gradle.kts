@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.21"
+    id("org.jetbrains.kotlin.plugin.compose")
     id("maven-publish")
 }
 
