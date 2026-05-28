@@ -36,7 +36,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.chobitech"
                 artifactId = "chobilib"
-                version = "0.1.0"
+                version = "0.1.1"
             }
         }
     }
