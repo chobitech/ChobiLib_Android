@@ -50,7 +50,7 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
-                groupId = "com.chobitech"
+                groupId = "com.github.chobitech"
                 artifactId = "chobilib"
                 version = "0.1.0"
             }
