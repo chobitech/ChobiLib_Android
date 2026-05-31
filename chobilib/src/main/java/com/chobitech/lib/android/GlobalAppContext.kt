@@ -7,7 +7,7 @@ object GlobalAppContext {
     lateinit var appContext: Context
         private set
 
-    fun initialise(context: Context) {
+    fun initialize(context: Context) {
         synchronized(this) {
             if (!::appContext.isInitialized) {
                 appContext = context.applicationContext
