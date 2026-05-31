@@ -47,6 +47,10 @@ android {
 publishing {
     publications {
         register<MavenPublication>("release") {
+
+            groupId = "com.github.chobitech"
+            artifactId = "chobilib"
+
             afterEvaluate {
                 from(components["release"])
             }
