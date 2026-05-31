@@ -44,7 +44,17 @@ android {
 }
 
 
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+}
 
+/*
 afterEvaluate {
     publishing {
         publications {
@@ -57,6 +67,8 @@ afterEvaluate {
         }
     }
 }
+
+ */
 
 
 dependencies {
