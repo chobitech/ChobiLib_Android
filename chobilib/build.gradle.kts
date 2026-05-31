@@ -23,17 +23,6 @@ android {
         compose = true
     }
 
-    /*
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15" // バージョンはプロジェクトに合わせてください
-    }
-
-     */
-
-
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -58,23 +47,6 @@ publishing {
     }
 }
 
-/*
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
-                groupId = "com.github.chobitech"
-                artifactId = "chobilib"
-                version = "0.1.0"
-            }
-        }
-    }
-}
-
- */
-
-
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
@@ -86,4 +58,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.foundation)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.activity.ktx)
+
 }
