@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                         ) { handler ->
                             Button(
                                 onClick = {
-                                    handler.exec()
+                                    handler.fire()
                                 }
                             ) {
                                 Text("check permission")
