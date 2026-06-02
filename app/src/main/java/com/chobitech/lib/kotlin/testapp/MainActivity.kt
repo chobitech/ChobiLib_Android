@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.chobitech.lib.android.permission.WithPermissionCheckHandler
+import com.chobitech.lib.android.permission.WithPermissionCheck
 import com.chobitech.lib.kotlin.testapp.ui.theme.ChobiLib_AndroidTheme
 
 
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        WithPermissionCheckHandler(
+                        WithPermissionCheck(
                             permissions = arrayOf(
                                 Manifest.permission.ACCESS_FINE_LOCATION
                             ),
