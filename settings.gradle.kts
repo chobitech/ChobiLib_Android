@@ -23,5 +23,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ChobiLib_Android"
-//include(":app")
 include(":chobilib")
+include(":app")

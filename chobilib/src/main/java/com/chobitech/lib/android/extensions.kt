@@ -3,6 +3,7 @@ package com.chobitech.lib.android
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.compose.material3.Typography
@@ -13,7 +14,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-
 
 
 @Composable
@@ -52,6 +52,7 @@ fun Context.findActivity(): Activity? {
     return null
 }
 
+
 fun Context.findComponentActivity(): ComponentActivity? = findActivity() as? ComponentActivity
 
 
@@ -80,3 +81,18 @@ fun createTypoGraphy(fontFamily: FontFamily): Typography =
         labelMedium = defaultTg.labelMedium.copy(fontFamily = fontFamily),
         labelSmall = defaultTg.labelSmall.copy(fontFamily = fontFamily)
     )
+
+
+fun Context.isPermissionOk(permission: String): Boolean =
+    checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+
+fun Context.isPermissionsOk(permissions: Array<String>): Map<String, Boolean> =
+    hashMapOf<String, Boolean>().also { res ->
+        permissions.forEach { p ->
+            res[p] = isPermissionOk(p)
+        }
+    }
+
+
+val Activity.isAvailable: Boolean
+    get() = !isFinishing && !isDestroyed

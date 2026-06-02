@@ -1,6 +1,8 @@
-package com.chobitech.lib.android
+package com.chobitech.lib.kotlin.testapp
 
 import org.junit.Test
+
+import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -9,17 +11,7 @@ import org.junit.Test
  */
 class ExampleUnitTest {
     @Test
-    fun test_debug_log() {
-        println("--- START: printStackTrace() ---")
-        DebugLog.i("")
-        println("--- END: printStackTrace() ---")
-    }
-
-    /*
-    @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
-
-     */
 }
