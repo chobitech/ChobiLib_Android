@@ -1,3 +1,54 @@
+package com.chobitech.lib.android.permission
+
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import com.chobitech.lib.android.FireSwitch
+import com.chobitech.lib.android.WithActivityResultHandler
+import com.chobitech.lib.android.findActivity
+
+
+@Composable
+fun WithPermissionCheckHandler(
+    permissions: Array<String>,
+    onResult: (Map<String, PermissionCheckResult>) -> Unit,
+    content: @Composable (fireSwitch: FireSwitch) -> Unit
+) = WithActivityResultHandler(
+    contractGenerator = { ActivityResultContracts.RequestMultiplePermissions() },
+    onResult = { context, resMap ->
+        val activity = context.findActivity() ?: return@WithActivityResultHandler
+
+        val rMap = resMap.mapValues { (p, isGranted) ->
+            when (isGranted) {
+                true -> PermissionCheckResult.GRANTED
+                false -> when (activity.shouldShowRequestPermissionRationale(p)) {
+                    true -> PermissionCheckResult.DENIED
+                    false -> PermissionCheckResult.PERMANENTLY_DENIED
+                }
+            }
+        }
+
+        onResult(rMap)
+    },
+    content = { launcher ->
+        val scope = rememberCoroutineScope()
+        val fireSwitch = remember(scope) {
+
+            FireSwitch(scope)
+        }
+
+        LaunchedEffect(fireSwitch.fired) {
+            fireSwitch.fired.collect {
+                launcher.launch(permissions)
+            }
+        }
+
+        content(fireSwitch)
+    }
+)
+
 //package com.chobitech.lib.android.permission
 //
 //import androidx.activity.ComponentActivity

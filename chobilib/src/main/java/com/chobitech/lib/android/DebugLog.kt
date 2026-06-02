@@ -13,13 +13,25 @@ object DebugLog {
     private val wName = ::w.name
     private val eName = ::e.name
 
+    private const val COMPOSABLE_SINGLETON_PREFIX = "ComposableSingletons$"
+
     private fun getMethodName(st: StackTraceElement?): String =
         st?.let {
-            val cName = st.className
-                .substringAfterLast(".")
-                .substringBefore("$")
+
+            val cName = st.className.substringAfterLast(".")
+                .let { s ->
+                    when (s.startsWith(COMPOSABLE_SINGLETON_PREFIX)) {
+                        true -> s.substringAfter(COMPOSABLE_SINGLETON_PREFIX)
+                        false -> s
+                    }.substringBefore("$")
+                }
                 .removeSuffix("Kt")
-            " (${cName}.${st.methodName}(), ${st.fileName}:${st.lineNumber})"
+
+
+            val methodName = st.methodName
+                .substringBefore("$")
+
+            " (${cName}.${methodName}(), ${st.fileName}:${st.lineNumber})"
         } ?: ""
 
     @JvmOverloads
@@ -62,19 +74,17 @@ object DebugLog {
         Log.e(tempTag ?: tag, "${e.localizedMessage}${getMethodName(st)}", e)
     }
 
+
     private fun getCallStackTrace(mName: String): StackTraceElement? {
         val stackTrace = Thread.currentThread().stackTrace
 
-        var isCallingMethod = false
-
-        for (st in stackTrace) {
-            if (!isCallingMethod && st.className == clsName && st.methodName == mName) {
-                isCallingMethod = true
-            } else if (isCallingMethod) {
-                return st
-            }
+        val selfIndex = stackTrace.indexOfLast { st ->
+            st.className == clsName && st.methodName.substringBefore("$") == mName
         }
 
-        return null
+        return when (selfIndex >= 0) {
+            true -> stackTrace.getOrNull(selfIndex + 1)
+            false -> null
+        }
     }
 }
