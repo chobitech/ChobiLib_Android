@@ -46,6 +46,17 @@ publishing {
             }
         }
     }
+
+    repositories {
+        maven {
+            name = "ChobiLib_Android"
+            url = uri("https://maven.pkg.github.com/chobitech/ChobiLib_Android") // リポジトリURL
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
 
 
