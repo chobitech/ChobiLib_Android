@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun <I, O> WithActivityResult(
-    argsGetter: () -> I,
+    args: I,
     contractGenerator: () -> ActivityResultContract<I, O>,
     fireSwitch: FireSwitch? = null,
     onResult: (context: Context, result: O) -> Unit,
@@ -21,7 +21,7 @@ fun <I, O> WithActivityResult(
 
     val currentOnResult by rememberUpdatedState(onResult)
 
-    val currentArgsGetter by rememberUpdatedState(argsGetter)
+    val currentArgs by rememberUpdatedState(args)
 
     val launcher = rememberLauncherForActivityResult(
         contract = contractGenerator()
@@ -31,7 +31,7 @@ fun <I, O> WithActivityResult(
 
     WithFireSwitch(
         fireSwitch = fireSwitch,
-        onFired = { launcher.launch(currentArgsGetter()) },
+        onFired = { launcher.launch(currentArgs) },
         content = content
     )
 }
