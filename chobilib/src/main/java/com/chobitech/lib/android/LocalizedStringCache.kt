@@ -6,8 +6,16 @@ import androidx.annotation.StringRes
 
 private val stringMap = hashMapOf<Int, String>()
 
+/*
 fun getCachedResString(context: Context, @StringRes resId: Int, vararg formatArgs: Any?): String = stringMap[resId]
     ?: context.getString(resId, *formatArgs).also {
+        stringMap[resId] = it
+    }
+
+ */
+
+fun Context.getCachedResString(@StringRes resId: Int, vararg formatArgs: Any?): String = stringMap[resId]
+    ?: getString(resId, *formatArgs).also {
         stringMap[resId] = it
     }
 
