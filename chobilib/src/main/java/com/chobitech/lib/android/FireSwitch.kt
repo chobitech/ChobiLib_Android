@@ -27,16 +27,17 @@ class FireSwitch(
 
 @Composable
 fun WithFireSwitch(
+    fireSwitch: FireSwitch? = null,
     onFired: () -> Unit,
     content: @Composable (fireSwitch: FireSwitch) -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
-    val fireSwitch = remember(scope) {
+    val innerFireSwitch = fireSwitch ?: remember(scope) {
         FireSwitch(scope)
     }
 
-    val firedState by rememberUpdatedState(fireSwitch.fired)
+    val firedState by rememberUpdatedState(innerFireSwitch.fired)
 
     LaunchedEffect(Unit) {
         firedState.collect {
@@ -44,5 +45,5 @@ fun WithFireSwitch(
         }
     }
 
-    content(fireSwitch)
+    content(innerFireSwitch)
 }

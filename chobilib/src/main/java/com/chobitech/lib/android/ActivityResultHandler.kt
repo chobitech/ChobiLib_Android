@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 fun <I, O> WithActivityResult(
     args: I,
     contractGenerator: () -> ActivityResultContract<I, O>,
+    fireSwitch: FireSwitch? = null,
     onResult: (context: Context, result: O) -> Unit,
     content: @Composable (fireSwitch: FireSwitch) -> Unit
 ) {
@@ -29,6 +30,7 @@ fun <I, O> WithActivityResult(
     }
 
     WithFireSwitch(
+        fireSwitch = fireSwitch,
         onFired = { launcher.launch(currentArgs) },
         content = content
     )
