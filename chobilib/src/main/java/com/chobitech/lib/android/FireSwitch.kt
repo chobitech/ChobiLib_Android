@@ -37,11 +37,11 @@ fun WithFireSwitch(
         FireSwitch(scope)
     }
 
-    val firedState by rememberUpdatedState(innerFireSwitch.fired)
+    val currentOnFired by rememberUpdatedState(onFired)
 
-    LaunchedEffect(Unit) {
-        firedState.collect {
-            onFired()
+    LaunchedEffect(innerFireSwitch) {
+        innerFireSwitch.fired.collect {
+            currentOnFired()
         }
     }
 
