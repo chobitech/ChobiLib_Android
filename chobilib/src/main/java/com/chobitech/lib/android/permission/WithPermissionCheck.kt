@@ -1,11 +1,20 @@
 package com.chobitech.lib.android.permission
 
+import android.content.Context
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import com.chobitech.lib.android.FireSwitch
 import com.chobitech.lib.android.WithActivityResult
 import com.chobitech.lib.android.findActivity
 
+
+
+private val withPermissionCheckContractGenerator = {
+    ActivityResultContracts.RequestMultiplePermissions()
+}
 
 @Composable
 fun WithPermissionCheck(
@@ -13,24 +22,39 @@ fun WithPermissionCheck(
     fireSwitch: FireSwitch? = null,
     onResult: (Map<String, PermissionCheckResult>) -> Unit,
     content: @Composable (fireSwitch: FireSwitch) -> Unit
-) = WithActivityResult(
-    args = permissions,
-    fireSwitch = fireSwitch,
-    contractGenerator = { ActivityResultContracts.RequestMultiplePermissions() },
-    onResult = { context, resMap ->
-        val activity = context.findActivity() ?: return@WithActivityResult
+) {
+    val currentPermissionsGetter = remember(permissions) {
+        {
+            permissions
+        }
+    }
 
-        val rMap = resMap.mapValues { (p, isGranted) ->
-            when (isGranted) {
-                true -> PermissionCheckResult.GRANTED
-                false -> when (activity.shouldShowRequestPermissionRationale(p)) {
-                    true -> PermissionCheckResult.DENIED
-                    false -> PermissionCheckResult.PERMANENTLY_DENIED
+    val currentArgOnResult by rememberUpdatedState(onResult)
+
+    val currentOnResult: (Context, Map<String, Boolean>) -> Unit =
+        remember(currentArgOnResult) {
+            { ctx, res ->
+                val activity = ctx.findActivity() ?: return@remember
+
+                val rMap = res.mapValues { (p, isGranted) ->
+                    when (isGranted) {
+                        true -> PermissionCheckResult.GRANTED
+                        false -> when (activity.shouldShowRequestPermissionRationale(p)) {
+                            true -> PermissionCheckResult.DENIED
+                            false -> PermissionCheckResult.PERMANENTLY_DENIED
+                        }
+                    }
                 }
+
+                currentArgOnResult(rMap)
             }
         }
 
-        onResult(rMap)
-    },
-    content = content
-)
+    WithActivityResult(
+        argsGetter = currentPermissionsGetter,
+        fireSwitch = fireSwitch,
+        contractGenerator = withPermissionCheckContractGenerator,
+        onResult = currentOnResult,
+        content = content
+    )
+}
