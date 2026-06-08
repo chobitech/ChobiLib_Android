@@ -1,12 +1,10 @@
 package com.chobitech.lib.android.composable
 
-import android.icu.util.Freezable
 import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import com.chobitech.lib.android.FireSwitch
@@ -27,10 +25,10 @@ fun WithSimpleAlertDialog(
     val currentTitle by rememberUpdatedState(title)
     val currentText by rememberUpdatedState(text)
 
-    val scope = rememberCoroutineScope()
-    val innerCloseSwitch = closeSwitch ?: remember(scope) {
-        FireSwitch(scope)
+    val innerCloseSwitch = remember(closeSwitch) {
+        closeSwitch ?: FireSwitch()
     }
+
 
     val currentConfirmButton: @Composable () -> Unit = remember(confirmButton) {
         {
