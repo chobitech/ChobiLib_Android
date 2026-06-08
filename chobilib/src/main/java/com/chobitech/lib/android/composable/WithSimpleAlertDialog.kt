@@ -11,7 +11,7 @@ import com.chobitech.lib.android.FireSwitch
 
 
 @Composable
-fun SimpleAlertDialog(
+fun WithSimpleAlertDialog(
     openSwitch: FireSwitch? = null,
     closeSwitch: FireSwitch? = null,
     allowOutsideTapClose: Boolean = true,
