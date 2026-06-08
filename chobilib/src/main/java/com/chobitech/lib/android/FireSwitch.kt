@@ -11,8 +11,13 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
+import kotlin.uuid.Uuid
 
 class FireSwitch {
+
+    internal val uuid = UUID.randomUUID()
+
     private val _fired = MutableSharedFlow<Unit>(
         replay = 0,
         extraBufferCapacity = 1,

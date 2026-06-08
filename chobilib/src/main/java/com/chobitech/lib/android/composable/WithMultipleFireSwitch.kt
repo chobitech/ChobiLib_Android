@@ -9,13 +9,6 @@ import com.chobitech.lib.android.FireSwitch
 
 
 @Composable
-private fun FireSwitchAndEventObserver(
-    fse: FireSwitchAndEvent
-) {
-    rememberFireSwitch(fse.fireSwitch, fse.onFired)
-}
-
-@Composable
 fun WithMultipleFireSwitch(
     fireSwitchEventList: List<FireSwitchAndEvent>,
     content: @Composable (fireSwitchList: List<FireSwitch>) -> Unit
@@ -25,7 +18,7 @@ fun WithMultipleFireSwitch(
     }
 
     for (fse in fireSwitchEventList) {
-        key(fse) {
+        key(fse.fireSwitch.uuid) {
             FireSwitchAndEventObserver(fse)
         }
     }

@@ -2,6 +2,7 @@ package com.chobitech.lib.android.composable
 
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,33 +14,18 @@ import com.chobitech.lib.android.FireSwitch
 
 @Composable
 fun <I, O> WithActivityResult(
+    fireSwitch: FireSwitch? = null,
     argsGetter: () -> I,
     contractGenerator: () -> ActivityResultContract<I, O>,
-    fireSwitch: FireSwitch? = null,
     onResult: (context: Context, result: O) -> Unit,
     content: @Composable (fireSwitch: FireSwitch) -> Unit
 ) {
-    val context = LocalContext.current
-
-    val currentOnResult by rememberUpdatedState(onResult)
-    val currentContractGenerator by rememberUpdatedState(contractGenerator)
-    val currentArgsGetter by rememberUpdatedState(argsGetter)
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = currentContractGenerator()
-    ) { result ->
-        currentOnResult(context, result)
-    }
-
-    val onFired = remember(launcher) {
-        {
-            launcher.launch(currentArgsGetter())
-        }
-    }
-
-    WithFireSwitch(
-        fireSwitch = fireSwitch,
-        onFired = onFired,
-        content = content
+    val fireSwitch = rememberFireSwitchForActivityResultLauncher(
+        outerFireSwitch = fireSwitch,
+        argsGetter = argsGetter,
+        contractGenerator = contractGenerator,
+        onResult = onResult
     )
+
+    content(fireSwitch)
 }
