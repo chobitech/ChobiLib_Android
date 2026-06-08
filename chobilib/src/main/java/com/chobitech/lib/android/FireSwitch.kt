@@ -7,20 +7,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class FireSwitch(
-    private val scope: CoroutineScope
-) {
-    private val _fired = MutableSharedFlow<Unit>()
+class FireSwitch {
+    private val _fired = MutableSharedFlow<Unit>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val fired = _fired.asSharedFlow()
 
     fun fire() {
-        scope.launch {
-            _fired.emit(Unit)
-        }
+        _fired.tryEmit(Unit)
     }
 }
 
