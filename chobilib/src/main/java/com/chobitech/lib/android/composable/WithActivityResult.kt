@@ -5,6 +5,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalContext
 import com.chobitech.lib.android.FireSwitch
@@ -30,9 +31,15 @@ fun <I, O> WithActivityResult(
         currentOnResult(context, result)
     }
 
+    val onFired = remember(launcher) {
+        {
+            launcher.launch(currentArgsGetter())
+        }
+    }
+
     WithFireSwitch(
         fireSwitch = fireSwitch,
-        onFired = { launcher.launch(currentArgsGetter()) },
+        onFired = onFired,
         content = content
     )
 }
