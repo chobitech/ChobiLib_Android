@@ -1,14 +1,11 @@
 package com.chobitech.lib.android.composable
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import com.chobitech.lib.android.FireSwitch
 
 
 @Composable
+@JvmName("WithMultipleFireSwitchWithEvents")
 fun WithMultipleFireSwitch(
     fireSwitchEventList: List<FireSwitchAndEvent>,
     content: @Composable (fireSwitchList: List<FireSwitch>) -> Unit
@@ -21,6 +18,7 @@ fun WithMultipleFireSwitch(
 }
 
 @Composable
+@JvmName("WithMultipleFireSwitchWithCallbacks")
 fun WithMultipleFireSwitch(
     onFiredList: List<() -> Unit>,
     content: @Composable (fireSwitchList: List<FireSwitch>) -> Unit

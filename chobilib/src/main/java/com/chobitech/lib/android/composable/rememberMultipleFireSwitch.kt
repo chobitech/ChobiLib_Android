@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import com.chobitech.lib.android.FireSwitch
 
 @Composable
+@JvmName("rememberMultipleFireSwitchFromEvents")
 fun rememberMultipleFireSwitch(
     fireSwitchAndEvents: List<FireSwitchAndEvent>
 ): List<FireSwitch> {
@@ -24,6 +25,7 @@ fun rememberMultipleFireSwitch(
 }
 
 @Composable
+@JvmName("rememberMultipleFireSwitchFromCallbacks")
 fun rememberMultipleFireSwitch(
     onFiredList: List<() -> Unit>
 ): List<FireSwitch> {
