@@ -13,15 +13,22 @@ fun WithMultipleFireSwitch(
     fireSwitchEventList: List<FireSwitchAndEvent>,
     content: @Composable (fireSwitchList: List<FireSwitch>) -> Unit
 ) {
-    val switchList = remember(fireSwitchEventList) {
-        fireSwitchEventList.map { it.fireSwitch }
-    }
+    val swList = rememberMultipleFireSwitch(
+        fireSwitchAndEvents = fireSwitchEventList
+    )
 
-    for (fse in fireSwitchEventList) {
-        key(fse.fireSwitch.uuid) {
-            FireSwitchAndEventObserver(fse)
-        }
-    }
-
-    content(switchList)
+    content(swList)
 }
+
+@Composable
+fun WithMultipleFireSwitch(
+    onFiredList: List<() -> Unit>,
+    content: @Composable (fireSwitchList: List<FireSwitch>) -> Unit
+) {
+    val swList = rememberMultipleFireSwitch(
+        onFiredList = onFiredList
+    )
+
+    content(swList)
+}
+

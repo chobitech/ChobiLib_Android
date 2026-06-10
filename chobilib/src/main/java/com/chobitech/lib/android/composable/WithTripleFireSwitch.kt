@@ -11,19 +11,15 @@ fun WithTripleFireSwitch(
     fireSwitchAndEvent3: FireSwitchAndEvent,
     content: @Composable (fireSwitch1: FireSwitch, fireSwitch2: FireSwitch, fireSwitch3: FireSwitch) -> Unit
 ) {
-    val fseList = remember(
-        fireSwitchAndEvent1,
-        fireSwitchAndEvent2,
-        fireSwitchAndEvent3
-    ) {
-        listOf(fireSwitchAndEvent1, fireSwitchAndEvent2, fireSwitchAndEvent3)
-    }
-
-    WithMultipleFireSwitch(
-        fireSwitchEventList = fseList
-    ) { swList ->
-        content(swList[0], swList[1], swList[2])
-    }
+    WithTripleFireSwitch(
+        fireSwitch1 = fireSwitchAndEvent1.fireSwitch,
+        onFired1 = fireSwitchAndEvent1.onFired,
+        fireSwitch2 = fireSwitchAndEvent2.fireSwitch,
+        onFired2 = fireSwitchAndEvent2.onFired,
+        fireSwitch3 = fireSwitchAndEvent3.fireSwitch,
+        onFired3 = fireSwitchAndEvent3.onFired,
+        content = content
+    )
 }
 
 
@@ -37,14 +33,14 @@ fun WithTripleFireSwitch(
     onFired3: () -> Unit,
     content: @Composable (fireSwitch1: FireSwitch, fireSwitch2: FireSwitch, fireSwitch3: FireSwitch) -> Unit
 ) {
-    val fs1 = remember(fireSwitch1) { fireSwitch1 ?: FireSwitch() }
-    val fs2 = remember(fireSwitch2) { fireSwitch2 ?: FireSwitch() }
-    val fs3 = remember(fireSwitch3) { fireSwitch3 ?: FireSwitch() }
-
-    WithTripleFireSwitch(
-        fireSwitchAndEvent1 = remember(fs1, onFired1) {FireSwitchAndEvent(fs1, onFired1) },
-        fireSwitchAndEvent2 = remember(fs2, onFired2) { FireSwitchAndEvent(fs2, onFired2) },
-        fireSwitchAndEvent3 = remember(fs3, onFired3) { FireSwitchAndEvent(fs3, onFired3) },
-        content = content
+    val swTriple = rememberTripleFireSwitch(
+        fireSwitch1 = fireSwitch1,
+        onFired1 = onFired1,
+        fireSwitch2 = fireSwitch2,
+        onFired2 = onFired2,
+        fireSwitch3 = fireSwitch3,
+        onFired3 = onFired3
     )
+
+    content(swTriple.first, swTriple.second, swTriple.third)
 }

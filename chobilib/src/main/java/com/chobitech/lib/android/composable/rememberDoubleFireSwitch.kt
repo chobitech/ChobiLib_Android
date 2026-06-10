@@ -8,20 +8,23 @@ import com.chobitech.lib.android.FireSwitch
 
 @Composable
 fun rememberDoubleFireSwitch(
+    fireSwitch1: FireSwitch? = null,
     onFired1: () -> Unit,
+    fireSwitch2: FireSwitch? = null,
     onFired2: () -> Unit
-): List<FireSwitch> {
-    val currentOnFired1 by rememberUpdatedState(onFired1)
-    val currentOnFired2 by rememberUpdatedState(onFired2)
+): Pair<FireSwitch, FireSwitch> {
 
-    val lists = remember {
-        listOf(
-            FireSwitchAndEvent(FireSwitch(), { currentOnFired1() }),
-            FireSwitchAndEvent(FireSwitch(), { currentOnFired2() })
-        )
-    }
-
-    return rememberMultipleFireSwitch(
-        fireSwitchAndEvents = lists
+    val sw1 = rememberFireSwitch(
+        outerFierSwitch = fireSwitch1,
+        onFired = onFired1
     )
+
+    val sw2 = rememberFireSwitch(
+        outerFierSwitch = fireSwitch2,
+        onFired = onFired2
+    )
+
+    return remember(sw1, sw2) {
+        Pair(sw1, sw2)
+    }
 }

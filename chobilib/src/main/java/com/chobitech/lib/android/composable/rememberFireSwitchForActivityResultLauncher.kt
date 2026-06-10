@@ -22,7 +22,7 @@ fun <I, O> rememberFireSwitchForActivityResultLauncher(
 
     val currentArgsGetter by rememberUpdatedState(argsGetter)
 
-    val currentOnFired = remember(currentLauncher, currentArgsGetter) {
+    val currentOnFired = remember(currentLauncher) {
         {
             currentLauncher.launch(currentArgsGetter())
         }

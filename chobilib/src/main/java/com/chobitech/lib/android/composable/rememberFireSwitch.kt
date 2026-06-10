@@ -12,9 +12,11 @@ fun rememberFireSwitch(
     outerFierSwitch: FireSwitch? = null,
     onFired: () -> Unit
 ): FireSwitch {
-    val switch = remember(outerFierSwitch) {
-        outerFierSwitch ?: FireSwitch()
+    val innerSwitch = remember {
+        FireSwitch()
     }
+
+    val switch = outerFierSwitch ?: innerSwitch
 
     val currentOnFired by rememberUpdatedState(onFired)
 
