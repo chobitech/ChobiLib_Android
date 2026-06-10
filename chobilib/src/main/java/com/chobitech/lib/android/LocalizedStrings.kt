@@ -7,45 +7,49 @@ import androidx.compose.ui.platform.LocalContext
 
 object LocalizedStrings {
 
+    private fun get(context: Context, @StringRes resId: Int): String {
+        return context.getCachedResString(resId)
+    }
+
     @Composable
-    private fun loadString(@StringRes resId: Int): String {
+    private fun get(@StringRes resId: Int): String {
         val context = LocalContext.current
         return context.getCachedResString(resId)
     }
 
     fun getYes(context: Context) = context.getCachedResString(R.string.yes)
     val yes: String
-        @Composable get() = loadString(R.string.yes)
+        @Composable get() = get(R.string.yes)
 
 
 
     fun getCancel(context: Context) = context.getCachedResString(R.string.cancel)
     val cancel: String
-        @Composable get() = loadString(R.string.cancel)
+        @Composable get() = get(R.string.cancel)
 
 
     fun getOk(context: Context) = context.getCachedResString(R.string.ok)
     val ok: String
-        @Composable get() = loadString(R.string.ok)
+        @Composable get() = get(R.string.ok)
 
 
     fun getNo(context: Context) = context.getCachedResString(R.string.no)
     val no: String
-        @Composable get() = loadString(R.string.no)
+        @Composable get() = get(R.string.no)
 
 
     fun getOpen(context: Context) = context.getCachedResString(R.string.open)
     val open: String
-        @Composable get() = loadString(R.string.open)
+        @Composable get() = get(R.string.open)
 
 
     fun getClose(context: Context) = context.getCachedResString(R.string.close)
     val close: String
-        @Composable get() = loadString(R.string.close)
+        @Composable get() = get(R.string.close)
 
 
     fun getSave(context: Context) = context.getCachedResString(R.string.save)
     val save: String
-        @Composable get() = loadString(R.string.save)
+        @Composable get() = get(R.string.save)
 
 }
