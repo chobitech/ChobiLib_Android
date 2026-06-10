@@ -4,52 +4,43 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+
 
 object LocalizedStrings {
 
-    private fun get(context: Context, @StringRes resId: Int): String {
-        return context.getCachedResString(resId)
-    }
-
-    @Composable
-    private fun get(@StringRes resId: Int): String {
-        val context = LocalContext.current
-        return context.getCachedResString(resId)
-    }
-
-    fun getYes(context: Context) = context.getCachedResString(R.string.yes)
+    fun getYes(context: Context) = context.getString(R.string.yes)
     val yes: String
-        @Composable get() = get(R.string.yes)
+        @Composable get() = stringResource(R.string.yes)
 
 
-
-    fun getCancel(context: Context) = context.getCachedResString(R.string.cancel)
+    fun getCancel(context: Context) = context.getString(R.string.cancel)
     val cancel: String
-        @Composable get() = get(R.string.cancel)
+        @Composable get() = stringResource(R.string.cancel)
 
 
-    fun getOk(context: Context) = context.getCachedResString(R.string.ok)
+    fun getOk(context: Context) = context.getString(R.string.ok)
     val ok: String
-        @Composable get() = get(R.string.ok)
+        @Composable get() = stringResource(R.string.ok)
 
 
-    fun getNo(context: Context) = context.getCachedResString(R.string.no)
+    fun getNo(context: Context) = context.getString(R.string.no)
     val no: String
-        @Composable get() = get(R.string.no)
+        @Composable get() = stringResource(R.string.no)
 
 
-    fun getOpen(context: Context) = context.getCachedResString(R.string.open)
+    fun getOpen(context: Context) = context.getString(R.string.open)
     val open: String
-        @Composable get() = get(R.string.open)
+        @Composable get() = stringResource(R.string.open)
 
 
-    fun getClose(context: Context) = context.getCachedResString(R.string.close)
+    fun getClose(context: Context) = context.getString(R.string.close)
     val close: String
-        @Composable get() = get(R.string.close)
+        @Composable get() = stringResource(R.string.close)
 
 
-    fun getSave(context: Context) = context.getCachedResString(R.string.save)
+    fun getSave(context: Context) = context.getString(R.string.save)
     val save: String
-        @Composable get() = get(R.string.save)
+        @Composable get() = stringResource(R.string.save)
 
 }

@@ -40,7 +40,7 @@ publishing {
 
             groupId = "com.github.chobitech"
             artifactId = "chobilib"
-            version = "0.1.28"
+            version = "0.1.29"
 
             afterEvaluate {
                 from(components["release"])
